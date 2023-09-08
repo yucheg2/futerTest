@@ -1,9 +1,23 @@
 import booksService from "../service/books.service";
 import { AppDispatch, AppGetState } from "./index";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "./index";
+
+export interface VoliumInfo {
+    title: string;
+    imageLinks: {
+        thumbnail: string;
+    };
+    categories: string[];
+    authors: string[];
+}
+export interface Book {
+    id: string;
+    volumeInfo: VoliumInfo;
+}
 
 interface StateInterface {
-    entieties: [];
+    entieties: Book[];
     loding: {
         entieties: boolean;
     };
@@ -27,6 +41,7 @@ const booksSlice = createSlice({
         },
         resived(state, { payload }: PayloadAction<[]>) {
             state.entieties = payload;
+            state.loding.entieties = false;
         },
     },
 });
@@ -52,5 +67,12 @@ export const loadBooksList =
             console.log(error);
         }
     };
+
+//selectors
+
+export const getBooksListSelector = () => (state: RootState) =>
+    state.books.entieties;
+export const getBooksLoadingSelector = () => (state: RootState) =>
+    state.books.loding.entieties;
 
 export default booksReducer;

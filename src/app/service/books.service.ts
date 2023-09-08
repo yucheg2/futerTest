@@ -11,7 +11,11 @@ const booksService = {
         quantity: number
     ) {
         const { data } = await httpBooks.get(
-            `?q=${serchTxt}&orderBy=${params.sortBy}&maxResults=${quantity}&filter=free-ebooks&key=AIzaSyCoTI_T3IZfi8MNfzM60U1oXiZHc2RBzZ8`
+            `?q=${serchTxt}` +
+                (params.category === "all"
+                    ? ""
+                    : `+subject:${params.category}`) +
+                `&orderBy=${params.sortBy}&maxResults=${quantity}&filter=free-ebooks&key=AIzaSyCoTI_T3IZfi8MNfzM60U1oXiZHc2RBzZ8`
         );
         return data;
     },

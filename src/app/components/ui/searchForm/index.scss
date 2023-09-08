@@ -11,6 +11,9 @@
     @media (max-width: 768px) {
         width: 90%;
     }
+    @media (max-width: 300px) {
+        width: 100%;
+    }
 
     &__selects {
         display: flex;

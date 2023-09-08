@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import TextField from "../common/textField";
+import TextField from "../../common/textField";
 import "./index.scss";
-import SelectField from "../common/selectField";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { getCategories } from "../../store/categories";
-import { loadBooksList } from "../../store/books";
+import SelectField from "../../common/selectField";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { getCategories } from "../../../store/categories";
+import { loadBooksList } from "../../../store/books";
 
 export interface ParamsState {
     category: string;

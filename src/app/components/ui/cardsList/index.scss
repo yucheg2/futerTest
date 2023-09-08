@@ -1,0 +1,6 @@
+.booksList {
+    display: grid;
+    width: 65%;
+    margin: 0 auto;
+    grid-template-columns: repeat(4, minmax(200px, 0.5fr));
+}

@@ -1,6 +1,60 @@
 .booksList {
-    display: grid;
     width: 65%;
     margin: 0 auto;
-    grid-template-columns: repeat(4, minmax(200px, 0.5fr));
+    text-align: center;
+
+    @media (max-width: 768px) {
+        width: 80%;
+    }
+    @media (max-width: 552px) {
+        width: 70%;
+    }
+    button {
+        width: 100%;
+        margin: 30px 0 10px;
+        @media screen {
+        }
+    }
+    &__list {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 0.5fr));
+        grid-gap: 30px;
+        @media (max-width: 552px) {
+            grid-template-columns: 1fr;
+        }
+        margin-right: 0;
+    }
+    .bookCard {
+        transition: 200ms;
+        cursor: pointer;
+
+        background-color: #f3f2f1;
+        border: 1px solid black;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+
+        padding: 10px;
+        &__img {
+            height: 200px;
+            display: flex;
+            margin-bottom: 10px;
+            img {
+                width: 150px;
+                height: 200px;
+            }
+        }
+        &__authors {
+            width: 100%;
+            text-align: start;
+        }
+
+        &:hover {
+            background-color: hsl(40, 4%, 84%);
+        }
+    }
 }

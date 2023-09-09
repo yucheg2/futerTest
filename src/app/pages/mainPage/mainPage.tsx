@@ -1,6 +1,5 @@
 import * as React from "react";
 import "./index.scss";
-import SearchForm from "../../components/ui/searchForm/searchForm";
 import { useAppSelector } from "../../store/hooks";
 import {
     getBooksListSelector,
@@ -13,14 +12,18 @@ const MainPage = () => {
     const booksLoading = useAppSelector(getBooksLoadingSelector());
     console.log(booksLoading);
     return (
-        <div>
-            <header className="mainPage__header mb-4">
-                <div className="mb-3">
-                    <h1>Поиск книг</h1>
+        <div className="text-center">
+            {!booksLoading ? (
+                <BooksList books={books} />
+            ) : (
+                <div
+                    className="spinner-border mt-5"
+                    style={{ width: "5rem", height: "5rem" }}
+                    role="status"
+                >
+                    <span className="visually-hidden">Loading...</span>
                 </div>
-                <SearchForm />
-            </header>
-            {!booksLoading ? <BooksList books={books} /> : "Загрузка"}
+            )}
         </div>
     );
 };

@@ -1,23 +1,46 @@
 import React from "react";
 import { VoliumInfo } from "../../../store/books";
 
-const BookCard = ({ title, imageLinks, categories, authors }: VoliumInfo) => {
+interface BookCardProps extends VoliumInfo {
+    onClick: () => void;
+}
+
+const BookCard = ({
+    title,
+    imageLinks,
+    categories,
+    authors,
+    onClick,
+}: BookCardProps) => {
     return (
-        <div className="bookCard" key={title + imageLinks.thumbnail}>
-            <img src={imageLinks.thumbnail} alt="Обложка" />
-            <div className="bookCard__categories">
-                {categories &&
-                    categories.length > 0 &&
-                    categories.map((v, i) => {
-                        return <div key={v + i}>{v}</div>;
-                    })}
+        <div
+            className="bookCard"
+            onClick={onClick}
+            key={title + imageLinks?.thumbnail}
+        >
+            <div className="bookCard__img">
+                <img
+                    src={imageLinks?.thumbnail ? imageLinks.thumbnail : ""}
+                    alt="Обложка отсутствует"
+                />
             </div>
-            <span>{title}</span>
+            <div className="bookCard__categories">
+                {categories && categories.length > 0 && (
+                    <span className="badge text-bg-secondary ">
+                        {categories[0]}
+                    </span>
+                )}
+            </div>
+            <span className="bookCard__title fw-bold">{title}</span>
             <div className="bookCard__authors">
                 {authors &&
                     authors.length > 0 &&
-                    authors.map((v) => {
-                        return <div key={v}>{v}</div>;
+                    authors.map((v, i) => {
+                        return (
+                            <span key={v + i}>
+                                {v + (i + 1 === authors.length ? "" : ", ")}
+                            </span>
+                        );
                     })}
             </div>
         </div>

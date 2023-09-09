@@ -1,7 +1,9 @@
-import MainPage from "./app/pages/mainPage/mainPage";
+import { useRoutes } from "react-router-dom";
 import "./index.css";
+import routes from "./app/routes/routes";
 function App() {
-    return <MainPage />;
+    const route = useRoutes(routes);
+    return route;
 }
 
 export default App;

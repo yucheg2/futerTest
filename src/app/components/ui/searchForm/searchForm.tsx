@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "../../common/textField";
 import "./index.scss";
 import SelectField from "../../common/selectField";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { getCategories } from "../../../store/categories";
-import { loadBooksList } from "../../../store/books";
+import { getSerchedStatusSelector, loadBooksList } from "../../../store/books";
+import { useNavigate } from "react-router-dom";
 
 export interface ParamsState {
     category: string;
@@ -13,9 +14,11 @@ export interface ParamsState {
 
 const SearchForm = () => {
     const dispatch = useAppDispatch();
+    const navgate = useNavigate();
 
     const [serchTxt, setSerchTxt] = useState<string>("");
     const [error, setError] = useState<string>("");
+    const serchedStatus = useAppSelector(getSerchedStatusSelector());
     const [params, setParams] = useState<ParamsState>({
         category: "1",
         sortBy: "1",
@@ -26,6 +29,25 @@ const SearchForm = () => {
             { id: "1", name: "по релевантности", eng: "relevance" },
             { id: "2", name: "по дате", eng: "newest" },
         ];
+
+    useEffect(() => {
+        if (serchedStatus) {
+            dispatch(
+                loadBooksList(serchedStatus, {
+                    sortBy:
+                        sorters.find((v) => v.id === params.sortBy)?.eng ||
+                        "relevance",
+                    category:
+                        categories.find((v) => v.id === params.category)?.eng ||
+                        "all",
+                })
+            );
+        }
+    }, [params]);
+
+    useEffect(() => {
+        setError("");
+    }, [serchTxt]);
 
     const handleChangeSerch = (value: string) => {
         setSerchTxt(value);
@@ -39,6 +61,8 @@ const SearchForm = () => {
         e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>
     ) => {
         e.preventDefault();
+        navgate("/");
+
         if (serchTxt !== "") {
             dispatch(
                 loadBooksList(serchTxt, {

@@ -8,15 +8,22 @@ const booksService = {
     async getBooks(
         serchTxt: string,
         params: { sortBy: "relevance" | "newest"; category: string },
-        quantity: number
+        quantity: number,
+        startIndex?: number
     ) {
         const { data } = await httpBooks.get(
-            `?q=${serchTxt}` +
+            `?q=intitle:${serchTxt}` +
                 (params.category === "all"
                     ? ""
                     : `+subject:${params.category}`) +
-                `&orderBy=${params.sortBy}&maxResults=${quantity}&filter=free-ebooks&key=AIzaSyCoTI_T3IZfi8MNfzM60U1oXiZHc2RBzZ8`
+                `&orderBy=${params.sortBy}&startIndex=${
+                    startIndex ? startIndex : "0"
+                }&maxResults=${quantity}&key=AIzaSyCoTI_T3IZfi8MNfzM60U1oXiZHc2RBzZ8`
         );
+        return data;
+    },
+    async getBookById(id: string) {
+        const { data } = await httpBooks.get(id);
         return data;
     },
 };

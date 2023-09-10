@@ -3,6 +3,14 @@ import { AppDispatch, AppGetState } from "./index";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./index";
 
+export interface Error {
+    error?: {
+        code: number;
+        message: string;
+    };
+    message?: string;
+}
+
 export interface VoliumInfo {
     title: string;
     imageLinks: {
@@ -23,6 +31,7 @@ interface StateInterface {
         entieties: boolean;
         more: boolean;
     };
+    error: string;
 
     status: {
         serched: string;
@@ -38,6 +47,7 @@ const initialState: StateInterface = {
         serched: "",
         params: { sortBy: "relevance", category: "all" },
     },
+    error: "",
     loding: {
         entieties: false,
         more: false,
@@ -77,11 +87,15 @@ const booksSlice = createSlice({
             state.entieties = [...state.entieties, ...payload];
             state.loding.more = false;
         },
+        requestFaild(state) {
+            state.error = "Произошла ошибки";
+        },
     },
 });
 
 const { reducer: booksReducer, actions } = booksSlice;
-const { listRequested, resived, loadMoreRequested, resivedMore } = actions;
+const { listRequested, resived, loadMoreRequested, resivedMore, requestFaild } =
+    actions;
 
 export const loadBooksList =
     (
@@ -105,7 +119,7 @@ export const loadBooksList =
                 })
             );
         } catch (error) {
-            console.log(error);
+            dispatch(requestFaild());
         }
     };
 
@@ -122,7 +136,7 @@ export const loadMoreBooks =
             );
             dispatch(resivedMore(data.items));
         } catch (error) {
-            console.log(error);
+            dispatch(requestFaild());
         }
     };
 
@@ -139,5 +153,6 @@ export const getBookSelector = (id: string | undefined) => (state: RootState) =>
 export const getMoreBooksLoadingSelector = () => (state: RootState) =>
     state.books.loding.more;
 export const getTotalItem = () => (state: RootState) => state.books.totalItem;
+export const getBooksError = () => (state: RootState) => state.books.error;
 
 export default booksReducer;

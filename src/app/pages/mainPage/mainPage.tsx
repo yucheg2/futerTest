@@ -10,7 +10,6 @@ import BooksList from "../../components/ui/cardsList/booksList";
 const MainPage = () => {
     const books = useAppSelector(getBooksListSelector());
     const booksLoading = useAppSelector(getBooksLoadingSelector());
-    console.log(booksLoading);
     return (
         <div className="text-center">
             {!booksLoading ? (

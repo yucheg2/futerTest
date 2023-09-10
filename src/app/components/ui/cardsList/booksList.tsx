@@ -26,10 +26,10 @@ const BooksList = ({ books }: { books: Book[] }) => {
         <div className="booksList mt-5">
             {books && books.length > 0 ? (
                 <>
-                    <div className="booksList__list ">
-                        <span className="fs-5 fw-bold">
-                            {"Найдено " + totalItems + " книг"}
-                        </span>
+                    <span className="fs-5 fw-bold">
+                        {"Найдено " + totalItems + " книг"}
+                    </span>
+                    <div className="booksList__list mt-4">
                         {books.map((b) => {
                             return (
                                 <BookCard

@@ -29,7 +29,6 @@ const BookPage = () => {
         }
     }, [bookId]);
 
-    console.log(book);
     return book ? (
         <div className="bookPage">
             <div className="bookPage__img">
